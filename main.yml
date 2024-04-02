@@ -1,0 +1,36 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Install homebrew
+      include_role:
+        name: geerlingguy.mac.homebrew
+    - name: Make sure homebrew is present in PATH
+      ansible.builtin.lineinfile:
+        path: /etc/paths
+        state: present
+        line: '/opt/homebrew/bin'
+      become: true
+      become_user: root
+    - name: "Install homebrew visual-studio-code"
+      community.general.homebrew_cask:
+        name:
+          - "visual-studio-code"
+        state: "latest"
+    - name: "Install volta"
+      community.general.homebrew_cask:
+        name:
+          - "volta"
+        state: "latest" 
+    - name: "Install homebrew packages"
+      community.general.homebrew:
+        name:
+          - 'curl'
+          - 'openssl'
+          - 'jetbrains-toolbox'
+        state: present
+        update_homebrew: true
+    - name: "Install from Mac app store"
+      shell: mas install {{ item }}
+      with_items:
+        - 497799835 #xcode
+    

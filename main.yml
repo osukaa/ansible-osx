@@ -18,6 +18,7 @@
       ignore_errors: yes
       with_items:
         - visual-studio-code
+        - iterm2
     - name: "Install homebrew packages"
       community.general.homebrew:
         name: [

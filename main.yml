@@ -11,24 +11,25 @@
         line: '/opt/homebrew/bin'
       become: true
       become_user: root
-    - name: "Install homebrew visual-studio-code"
+    - name: "Install core packages via brew casks"
       community.general.homebrew_cask:
-        name:
-          - "visual-studio-code"
+        name: "{{ item }}"
         state: "latest"
-    - name: "Install volta"
-      community.general.homebrew_cask:
-        name:
-          - "volta"
-        state: "latest" 
+      ignore_errors: yes
+      with_items:
+        - visual-studio-code
     - name: "Install homebrew packages"
       community.general.homebrew:
-        name:
-          - 'curl'
-          - 'openssl'
-          - 'jetbrains-toolbox'
+        name: [
+          'curl',
+          'mas',
+          'openssl',
+          'rust',
+          'volta',
+          'jetbrains-toolbox',
+        ]
         state: present
-        update_homebrew: true
+        update_homebrew: yes
     - name: "Install from Mac app store"
       shell: mas install {{ item }}
       with_items:

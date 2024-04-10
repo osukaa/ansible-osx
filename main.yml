@@ -19,6 +19,8 @@
       with_items:
         - visual-studio-code
         - iterm2
+        - zoom
+        - dropbox
     - name: "Install homebrew packages"
       community.general.homebrew:
         name: [
